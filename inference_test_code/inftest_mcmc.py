@@ -2,21 +2,18 @@
 import os
 import numpy as np
 import h5py
-import scipy
-from scipy import stats
-from scipy import interpolate
-from .inftest_mcmc_tool import run_inference_test, run_inference_test_GMM
-from .inftest_mcmc_tool import compute_importance_weights, assign_importance_weights
+from Inference_testing.inference_test_code.inftest_mcmc_tool import run_inference_test
+from Inference_testing.inference_test_code.inftest_mcmc_tool import compute_importance_weights, assign_importance_weights
 #from qso_fitting.utils.get_paths import get_HI_DW_path
 #from qso_fitting.fitting.jax.dw_base import DampingWingBase
-from matplotlib import pyplot as plt
 from IPython import embed
-from scipy import stats
+
+
 #from dw_inference.inference.utils import corner_plot
 
 
 
-def qso_inference_test(mcmcfile, reweight=False, marginalize=False, astro_params_ngauss=8, seed_or_rng=None, cornerprefix=None):
+def Inference_test(mcmcfile, reweight=False, marginalize=False, astro_params_ngauss=8, seed_or_rng=None, cornerprefix=None):
 
     alpha_vec = np.concatenate((np.linspace(0.00, 0.994, num=100), np.linspace(0.995, 1.0, num=51)))
 
@@ -93,4 +90,4 @@ if __name__ == "__main__":
     mcmc_outfile = os.path.join(inf_path, '2D_10run40walkers_mcmc_2D_Nyx_v3.0_sed87654_walker40_step4000dataset.hdf5')
     cornerprefix =  os.path.join(inf_path,'inftest_mcmc_figures')
     seed_or_rng = np.random.default_rng(7777)
-    qso_inference_test(mcmc_outfile, reweight=True, cornerprefix=cornerprefix, seed_or_rng=seed_or_rng)
+    Inference_test(mcmc_outfile, reweight=False, cornerprefix=cornerprefix, seed_or_rng=seed_or_rng)
