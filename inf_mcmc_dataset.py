@@ -34,7 +34,7 @@ l_arr=[]
 Nrun=10
 for i_run in range(0,Nrun):
 
-    filename = 'MCMCfile_mcmctest_'+version + '_' + str(i_run) + '.hdf5'
+    filename = 'dz'+str(data_dz)+'_MCMCfile_mcmctest_'+version + '_' + str(i_run) + '.hdf5'
 
     with h5py.File(filename, 'r') as f:
         chain = f['chain'].value
