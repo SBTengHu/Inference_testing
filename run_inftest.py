@@ -13,7 +13,7 @@ from IPython import embed
 
 
 
-def Inference_test(mcmcfile, reweight=False, marginalize=False, astro_params_ngauss=8, seed_or_rng=None, cornerprefix=None):
+def Inference_test(mcmcfile, reweight=False, marginalize=False, astro_params_ngauss=8, seed_or_rng=None, cornerprefix=None,savename='convergence_test.pdf'):
 
     alpha_vec = np.concatenate((np.linspace(0.00, 0.994, num=100), np.linspace(0.995, 1.0, num=51)))
 
@@ -36,7 +36,7 @@ def Inference_test(mcmcfile, reweight=False, marginalize=False, astro_params_nga
     #theta_astro_true = theta_true[:,0:nastro]
 
     coverage, coverage_lo, coverage_hi = run_inference_test(
-        lnProb, lnProb_true, alpha_vec, title='Full Coverage', show=True, verbose=True,savename='convergence_test.pdf')
+        lnProb, lnProb_true, alpha_vec, title='Full Coverage', show=True, verbose=True,savename=savename)
 
     if reweight:
         importance_weights, C_ge_lnP_true, n_eff = compute_importance_weights(mcmc_nsteps_tot, alpha_vec, coverage, show=True)
