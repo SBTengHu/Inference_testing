@@ -4,24 +4,27 @@ import h5py
 from IPython import embed
 from scipy.interpolate import griddata
 
-rseed = 87654
+rseed = 12345
 rand = np.random.RandomState(rseed)
 
 nsteps_burn = 500
 nsteps_main = 4000
 nwalkers = 40
-ndim = 2
+ndim = 3
 
 Npargrid = 100
-version = 'mcmc_2D_Nyx_v3.0_sed' + str(rseed) + '_walker' + str(nwalkers) + '_step' + str(nsteps_main)
+version = 'Nyx_3D_v1.0_sed' + str(rseed) + '_walker' + str(nwalkers) + '_step' + str(nsteps_main)
 N_dataset = 1
 data_dz = N_dataset * 2.136
 
-ILLTNG_theta = [3.609, 1.53]
-oldILL_theta = [3.63, 1.56]
-Nyx_theta = [3.60, 1.59]
-true_theta = Nyx_theta
+#ILLTNG_theta = [3.609, 1.53]
+#oldILL_theta = [3.63, 1.56]
+#Nyx_theta = [3.60, 1.59]
 
+ILLTNG_theta = [3.609, 1.53, -13.28]
+oldILL_theta = [3.63, 1.56, -13.67]
+Nyx_theta = [3.60, 1.59, -13.308]
+true_theta = Nyx_theta
 
 chain_arr0=[]
 logprob_arr0=[]
@@ -31,8 +34,7 @@ l_arr=[]
 Nrun=10
 for i_run in range(0,Nrun):
 
-    filename = '2D' + str(nsteps_main) + 'steps' + str(nwalkers) + 'walkers_T0_' + str(
-        true_theta[0]) + '_gamma_' + str(true_theta[1]) + '_' + str(i_run) + 'posterior_' + version + '.hdf5'
+    filename = 'MCMCfile_mcmctest_'+version + '_' + str(i_run) + '.hdf5'
 
     with h5py.File(filename, 'r') as f:
         chain = f['chain'].value
@@ -66,7 +68,7 @@ for i_run in range(0,Nrun):
     Ptrue_arr.append(true_theta)
 
 
-filedataset = '2D_' + str(Nrun) + 'run' + str(nwalkers) + 'walkers_'+ version + 'dataset.hdf5'
+filedataset = '3D_' + str(Nrun) + 'run'+ version + 'dataset.hdf5'
 
 with h5py.File(filedataset, 'w') as f2:
     f2.create_dataset('Nrun', data=Nrun)
