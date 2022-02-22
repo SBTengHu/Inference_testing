@@ -1,9 +1,8 @@
 import numpy as np
-
 from matplotlib import pyplot as plt
 import scipy
 from sklearn import mixture
-from IPython import embed
+#from IPython import embed
 import corner
 
 
