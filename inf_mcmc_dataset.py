@@ -25,6 +25,7 @@ true_theta = Nyx_theta
 
 chain_arr0=[]
 logprob_arr0=[]
+LPtrue_arr=[]
 l_arr=[]
 
 Nrun=10
@@ -36,6 +37,7 @@ for i_run in range(0,Nrun):
     with h5py.File(filename, 'r') as f:
         chain = f['chain'].value
         log_prob = f['log_prob'].value
+        L_Ptrue = f['LP_true'].value
 
         chain_l = len(chain[:, 0, 0])
         print(str(i_run), "th run finish restoring mcmc posterior")
@@ -43,25 +45,24 @@ for i_run in range(0,Nrun):
     l_arr.append(chain_l)
     chain_arr0.append(chain)
     logprob_arr0.append(log_prob)
+    LPtrue_arr.append(L_Ptrue)
 
 
 lmin = np.min(l_arr)
 
 chain_arr = []
 logprob_arr = []
-logPtrue_arr = []
 Ptrue_arr = []
 
 for i_run in range(0,Nrun):
     flatchain = chain_arr0[i_run][-1*lmin:].flatten().reshape(lmin*nwalkers,ndim)
     flatprob = logprob_arr0[i_run][-1*lmin:].flatten()
 
-    print("calculate L(P_true)")
-    L_Ptrue = griddata(flatchain, flatprob, true_theta, method='nearest')
+    #print("calculate L(P_true)")
+    #L_Ptrue = griddata(flatchain, flatprob, true_theta, method='nearest')
 
     chain_arr.append(flatchain)
     logprob_arr.append(flatprob)
-    logPtrue_arr.append(L_Ptrue)
     Ptrue_arr.append(true_theta)
 
 
@@ -72,7 +73,7 @@ with h5py.File(filedataset, 'w') as f2:
     f2.create_dataset('mcmc_nsteps_tot', data=lmin)
     f2.create_dataset('ln_probs', data=logprob_arr)
     f2.create_dataset('samples', data=chain_arr)
-    f2.create_dataset('ln_prob_true', data=logPtrue_arr)
+    f2.create_dataset('ln_prob_true', data=LPtrue_arr)
     f2.create_dataset('theta_true', data=Ptrue_arr)
 
 embed()
