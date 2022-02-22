@@ -3,7 +3,7 @@ import numpy as np
 
 # Setup installation
 setup(name='Inference_testing',
-      version_format='{tag}.dev{commitcount}+{gitsha}',
+      version='1.0',
       #setup_requires=['setuptools-git-version'],
       description='a code to run inference test',
       author='Joseph Hennawi',
