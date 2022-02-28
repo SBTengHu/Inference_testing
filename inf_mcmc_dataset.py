@@ -3,6 +3,7 @@ import numpy as np
 import h5py
 from IPython import embed
 from scipy.interpolate import griddata
+import glob
 
 rseed = 12345
 rand = np.random.RandomState(rseed)
@@ -31,10 +32,12 @@ logprob_arr0=[]
 LPtrue_arr=[]
 l_arr=[]
 
-Nrun=10
+filenamelist = raw_skewers = sorted([os.path.basename(x) for x in glob.glob('*MCMCfile_mcmctest*Nyx_3D_v1.0_sed*.hdf5')])
+
+Nrun=len(filenamelist)
 for i_run in range(0,Nrun):
 
-    filename = 'dz'+str(data_dz)+'_MCMCfile_mcmctest_'+version + '_' + str(i_run) + '.hdf5'
+    filename = filenamelist[i_run]
 
     with h5py.File(filename, 'r') as f:
         chain = f['chain'].value
@@ -68,7 +71,7 @@ for i_run in range(0,Nrun):
     Ptrue_arr.append(true_theta)
 
 
-filedataset = '3D_' + str(Nrun) + 'run'+ version + 'dataset.hdf5'
+filedataset = version +str(Nrun) + 'run_dataset.hdf5'
 
 with h5py.File(filedataset, 'w') as f2:
     f2.create_dataset('Nrun', data=Nrun)
