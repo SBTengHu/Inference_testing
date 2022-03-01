@@ -14,7 +14,7 @@ nwalkers = 40
 ndim = 3
 
 Npargrid = 100
-version = 'Nyx_3D_v1.0_sed' + str(rseed) + '_walker' + str(nwalkers) + '_step' + str(nsteps_main)
+version = 'Nyx_2D_v1.0_sed' + str(rseed) + '_walker' + str(nwalkers) + '_step' + str(nsteps_main)
 N_dataset = 1
 data_dz = N_dataset * 2.136
 
@@ -32,7 +32,7 @@ logprob_arr0=[]
 LPtrue_arr=[]
 l_arr=[]
 
-filenamelist = raw_skewers = sorted([os.path.basename(x) for x in glob.glob('*MCMCfile_mcmctest*Nyx_3D_v1.0_sed*.hdf5')])
+filenamelist = raw_skewers = sorted([os.path.basename(x) for x in glob.glob('*2D_v1.0_sed*.hdf5')])
 
 Nrun=len(filenamelist)
 for i_run in range(0,Nrun):
