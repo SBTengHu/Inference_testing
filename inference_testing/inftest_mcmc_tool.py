@@ -218,7 +218,8 @@ def run_inference_test_GMM(samples, truths, ngauss, alpha_vec, nGM_samp=10000, s
                                                ngauss, alpha_vec=alpha_vec, nGM_samp=nGM_samp,
                                                seed_or_rng=seed_or_rng)
         if imock == 0:
-            inf_test_marg = np.zeros((nmock,) + inf_test_marg.shape, dtype=bool)
+            #bug, would the 2nd term on right be inf_test_marg0? #
+            inf_test_marg = np.zeros((nmock,) + inf_test_marg0.shape, dtype=bool)
 
         inf_test_marg[imock, :] = inf_test_marg0
 
