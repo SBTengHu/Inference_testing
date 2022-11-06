@@ -13,7 +13,7 @@ from IPython import embed
 
 
 
-def Inference_test(mcmcfile,marginalize=True ,reweight=False, marginalize=False, astro_params_ngauss=8, seed_or_rng=None, cornerprefix=None,savename='convergence_test.pdf'):
+def Inference_test(mcmcfile,reweight=False, marginalize=False, astro_params_ngauss=8, seed_or_rng=None, cornerprefix=None,savename='convergence_test.pdf'):
 
     alpha_vec = np.concatenate((np.linspace(0.00, 0.994, num=100), np.linspace(0.995, 1.0, num=51)))
 
@@ -78,7 +78,7 @@ def Inference_test(mcmcfile,marginalize=True ,reweight=False, marginalize=False,
 
         coverage_marg, coverage_marg_lo, coverage_marg_hi = run_inference_test_GMM(
             theta_astro_samp, theta_astro_true, astro_params_ngauss, alpha_vec, seed_or_rng=rng,
-          title='Marginal Coverage', show=True, verbose=True)
+          title='Marginal Coverage', show=True, verbose=True,savename='marg_'+savename)
 
 
 

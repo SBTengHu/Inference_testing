@@ -229,13 +229,13 @@ def run_inference_test_GMM(samples, truths, ngauss, alpha_vec, nGM_samp=10000, s
 
     # Make a plot of the Full inference test results
     if show:
-        inference_test_plot(alpha_vec, coverage, coverage_lo, coverage_hi, title=title)
+        inference_test_plot(alpha_vec, coverage, coverage_lo, coverage_hi, title=title,savename=savename)
 
     return coverage, coverage_lo, coverage_hi
 
 
 def inference_test_GMM(samples, true_value, ngauss, nGM_samp=10000, seed_or_rng=None, alpha_vec=None,
-                       debug1d=False, debug2d=False):
+                       debug1d=False, debug2d=False,savename='Marg_convergence.pdf'):
     """
     Given Markov chain samples from a posterior distribution test whether the true_value is within the contour levels
     set by alpha_vec
