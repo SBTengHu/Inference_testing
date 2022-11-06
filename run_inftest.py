@@ -2,7 +2,7 @@
 import os
 import numpy as np
 import h5py
-from Inference_testing.inference_testing.inftest_mcmc_tool import run_inference_test
+from Inference_testing.inference_testing.inftest_mcmc_tool import run_inference_test,run_inference_test_GMM
 from Inference_testing.inference_testing.inftest_mcmc_tool import compute_importance_weights, assign_importance_weights
 from qso_fitting.utils.get_paths import get_HI_DW_path
 from qso_fitting.fitting.jax.dw_base import DampingWingBase
@@ -13,7 +13,7 @@ from IPython import embed
 
 
 
-def Inference_test(mcmcfile, reweight=False, marginalize=False, astro_params_ngauss=8, seed_or_rng=None, cornerprefix=None,savename='convergence_test.pdf'):
+def Inference_test(mcmcfile,marginalize=True ,reweight=False, marginalize=False, astro_params_ngauss=8, seed_or_rng=None, cornerprefix=None,savename='convergence_test.pdf'):
 
     alpha_vec = np.concatenate((np.linspace(0.00, 0.994, num=100), np.linspace(0.995, 1.0, num=51)))
 
@@ -31,9 +31,6 @@ def Inference_test(mcmcfile, reweight=False, marginalize=False, astro_params_nga
     samples = np.array(mcmc_results['samples'].value)            # samples has shape (nqsos, nchain, nparams)
     theta_true = np.array(mcmc_results['theta_true'].value)      # theta_true has shape (nqsos, nparams)
 
-    # Some code for the inference test on the marginalized distribution
-   #theta_astro_samp = samples[:,:,0:nastro]
-    #theta_astro_true = theta_true[:,0:nastro]
 
     coverage, coverage_lo, coverage_hi = run_inference_test(
         lnProb, lnProb_true, alpha_vec, title='Full Coverage', show=True, verbose=True,savename=savename)
@@ -72,11 +69,19 @@ def Inference_test(mcmcfile, reweight=False, marginalize=False, astro_params_nga
         #corner_plot(samples[imock, ...], var_label, theta_true=theta_true[imock, :], weights=importance_weights_chain,cornerfile=corner_reweight)
         #corner_plot(samples[imock, ...], var_label, theta_true=theta_true[imock, :], cornerfile=corner_orig)
 
-    # Marginal inference test
-    #if marginalize:
-    #  coverage_marg, coverage_marg_lo, coverage_marg_hi = run_inference_test_GMM(
-     #       theta_astro_samp, theta_astro_true, astro_params_ngauss, alpha_vec, seed_or_rng=rng,
-    #      title='Marginal Coverage', show=True, verbose=True)
+    #Marginal inference test
+    if marginalize:
+        nastro=2
+        # Some code for the inference test on the marginalized distribution
+        theta_astro_samp = samples[:, :, 0:nastro]
+        theta_astro_true = theta_true[:, 0:nastro]
+
+        coverage_marg, coverage_marg_lo, coverage_marg_hi = run_inference_test_GMM(
+            theta_astro_samp, theta_astro_true, astro_params_ngauss, alpha_vec, seed_or_rng=rng,
+          title='Marginal Coverage', show=True, verbose=True)
+
+
+
 
 
 if __name__ == "__main__":
