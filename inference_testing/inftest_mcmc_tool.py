@@ -174,7 +174,7 @@ def run_inference_test(lnP_mock, lnP_true, alpha_vec, C_ge_lnP_true=None, show=T
 
 
 def run_inference_test_GMM(samples, truths, ngauss, alpha_vec, nGM_samp=10000, seed_or_rng=None, C_ge_lnP_true=None,
-                           show=True, verbose=True, title=None):
+                           show=True, verbose=True, title=None,savename='convergence.pdf'):
     """
     Args:
         samples (ndarray):

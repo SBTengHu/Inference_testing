@@ -2,8 +2,8 @@
 import os
 import numpy as np
 import h5py
-from Inference_testing.inference_testing.inftest_mcmc_tool import run_inference_test,run_inference_test_GMM
-from Inference_testing.inference_testing.inftest_mcmc_tool import compute_importance_weights, assign_importance_weights
+from inference_testing.inftest_mcmc_tool import run_inference_test,run_inference_test_GMM
+from inference_testing.inftest_mcmc_tool import compute_importance_weights, assign_importance_weights
 from qso_fitting.utils.get_paths import get_HI_DW_path
 from qso_fitting.fitting.jax.dw_base import DampingWingBase
 from IPython import embed
