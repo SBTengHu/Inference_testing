@@ -20,16 +20,16 @@ def Inference_test(mcmcfile,reweight=False, marginalize=False, astro_params_ngau
     #_alpha_vec = np.linspace(0.01,0.99,num=29) if alpha_vec is None else alpha_vec
     rng = np.random.default_rng(seed_or_rng) if seed_or_rng is not None else np.random.default_rng(42)
 
-    mcmc_results = h5py.File(mcmcfile, 'r')
 
-    Nrun = mcmc_results['Nrun'].value
-    #nastro = mcmc_results['mcmc'].attrs['nastro']
-    mcmc_nsteps_tot = mcmc_results['mcmc_nsteps_tot'].value
+    with h5py.File(mcmcfile, 'r') as mcmc_results:
+        Nrun = mcmc_results['Nrun'].value
+        # nastro = mcmc_results['mcmc'].attrs['nastro']
+        mcmc_nsteps_tot = mcmc_results['mcmc_nsteps_tot'].value
 
-    lnProb =  np.array(mcmc_results['ln_probs'].value)           # lnProb has shape (nqsos, nchain)
-    lnProb_true =  np.array(mcmc_results['ln_prob_true'].value)  # lnProb_true has shape (nqsos,)
-    samples = np.array(mcmc_results['samples'].value)            # samples has shape (nqsos, nchain, nparams)
-    theta_true = np.array(mcmc_results['theta_true'].value)      # theta_true has shape (nqsos, nparams)
+        lnProb = np.array(mcmc_results['ln_probs'].value)  # lnProb has shape (nqsos, nchain)
+        lnProb_true = np.array(mcmc_results['ln_prob_true'].value)  # lnProb_true has shape (nqsos,)
+        samples = np.array(mcmc_results['samples'].value)  # samples has shape (nqsos, nchain, nparams)
+        theta_true = np.array(mcmc_results['theta_true'].value)  # theta_true has shape (nqsos, nparams)
 
 
     coverage, coverage_lo, coverage_hi = run_inference_test(
